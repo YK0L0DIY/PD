@@ -33,14 +33,37 @@ vSum([SubL|T],[SubL2|T2]):-
     sumL(SubL,SubL2,S),
     vSum(T,T2).
 
+extract(ColNumber, Matrix, Column) :-
+    maplist(nth0(ColNumber), Matrix, Column).
 
-constrangir([L|C],TColunas,TLinhas,Vars):-
-    create_mat(TColunas,TLinhas,MATRIX),
-    vSum(L,MATRIX),
+vColumns(M,L,Number):-vColumns(M,L,0,Number).
+vColumns(_,[],R,R).
+vColumns(M,[E|T],N,Max):-
+    extract(N,M,Col),
+    sumL(E,Col,S),
+    N1 is N+1,
+    vColumns(M,T,N1,Max).
+
+constrangir([C,L|_],TLinhas,TColunas,MATRIX):-
+%    fd_domain(TLinhas,1,20),
+%    fd_domain(TColunas,1,20),
+    create_mat(TLinhas,TColunas,MATRIX),
+    vSum(C,MATRIX),
+    vColumns(MATRIX,L,TColunas),
     flatten(MATRIX, Vars), % cria-se a linha completa
     fd_labeling(Vars).
 
+print_elements([]).
+print_elements([E|T]):-
+    E=0, write('.'),print_elements(T).
+print_elements([E|T]):-
+    E=1, write('X'),print_elements(T).
 
-puzzle(A,V):-
-    constrangir(A,4,4,V).
 
+print_matrix([]).
+print_matrix([H|T]) :- print_elements(H), nl, print_matrix(T).
+
+
+puzzle(A):-
+    constrangir(A,5,5,V),
+    print_matrix(V).
