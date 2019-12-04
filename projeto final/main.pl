@@ -6,11 +6,11 @@ create_mat(N0, N, [Line|Matrix]) :-
 	fd_domain(Line,[0,1]), % limita-se as variavies
 	create_mat(N1, N, Matrix).
 
-
 sumListaC([],0).
 sumListaC(L,Sum):-
     sumListaC(L,0,Sum).
-sumListaC([],X,Y):-X #= Y.
+sumListaC([],X,Y):-
+    X #= Y.
 sumListaC([E|L],S,Sum):-
     S1 #= S+E,
     sumListaC(L,S1,Sum).
@@ -18,7 +18,7 @@ sumListaC([E|L],S,Sum):-
 sumLista([],0).
 sumLista(L,Sum):-
     sumLista(L,0,Sum).
-sumLista([],X,Y):-X = Y.
+sumLista([],X,X).
 sumLista([E|L],S,Sum):-
     S1 = S+E,
     sumLista(L,S1,Sum).
@@ -36,7 +36,8 @@ vSum([SubL|T],[SubL2|T2]):-
 extract(ColNumber, Matrix, Column) :-
     maplist(nth0(ColNumber), Matrix, Column).
 
-vColumns(M,L,Number):-vColumns(M,L,0,Number).
+vColumns(M,L,Number):-
+    vColumns(M,L,0,Number).
 vColumns(_,[],R,R).
 vColumns(M,[E|T],N,Max):-
     extract(N,M,Col),
@@ -51,7 +52,6 @@ numberOfElements([],R,R).
 numberOfElements([E|T],N,R):-
     N1 is N+1,
     numberOfElements(T,N1,R).
-
 
 constrangir([C,L|_],MATRIX):-
     numberOfElements(C,TColunas),
@@ -68,10 +68,8 @@ print_elements([E|T]):-
 print_elements([E|T]):-
     E=1, write('X'),print_elements(T).
 
-
 print_matrix([]).
 print_matrix([H|T]) :- print_elements(H), nl, print_matrix(T).
-
 
 puzzle(A):-
     constrangir(A,V),
