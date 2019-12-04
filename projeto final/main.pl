@@ -44,9 +44,18 @@ vColumns(M,[E|T],N,Max):-
     N1 is N+1,
     vColumns(M,T,N1,Max).
 
-constrangir([C,L|_],TLinhas,TColunas,MATRIX):-
-%    fd_domain(TLinhas,1,20),
-%    fd_domain(TColunas,1,20),
+numberOfElements([],0).
+numberOfElements(List,R):-
+    numberOfElements(List,0,R).
+numberOfElements([],R,R).
+numberOfElements([E|T],N,R):-
+    N1 is N+1,
+    numberOfElements(T,N1,R).
+
+
+constrangir([C,L|_],MATRIX):-
+    numberOfElements(C,TColunas),
+    numberOfElements(L,TLinhas),
     create_mat(TLinhas,TColunas,MATRIX),
     vSum(C,MATRIX),
     vColumns(MATRIX,L,TColunas),
@@ -65,5 +74,7 @@ print_matrix([H|T]) :- print_elements(H), nl, print_matrix(T).
 
 
 puzzle(A):-
-    constrangir(A,5,5,V),
+    constrangir(A,V),
     print_matrix(V).
+
+%puzzle([[[1],[3],[1,1,1],[1],[1]],[[1],[1],[5],[1],[1]]]).
