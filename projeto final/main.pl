@@ -79,7 +79,7 @@ vgrups(L,C,[E|T]):-
 vLinha([],[]).           % verificar que todas as linhas teem os grupos corretamente formados
 vLinha([SubL|T],[SubL2|T2]):-
     vgrups(SubL,SubL2),
-    vLianha(T,T2).
+    vLinha(T,T2).
 
 vColunas(M,L,Number):-  % verificar que todas as colunas teem os grupos corretamnete criados
     vColunas(M,L,0,Number).
@@ -94,7 +94,7 @@ constrangir([C,L|_],MATRIX):-       % criar as contricoes :D
     numberOfElements(C,TColunas),   % obtem-se o numero de colunas
     numberOfElements(L,TLinhas),    % obtem-se o numero de linhas
     create_mat(TLinhas,TColunas,MATRIX),
-    vSum(C,MATRIX),        % verefica-se se as somas sao iguais as restricoes pretendidas tanto nas linhas como nas colunas
+    vLine(C,MATRIX),        % verefica-se se as somas sao iguais as restricoes pretendidas tanto nas linhas como nas colunas
     vColumns(MATRIX,L,TColunas),
     flatten(MATRIX, Vars), % cria-se a linha completa
     fd_labeling(Vars),     % da-se valoeres corretos aos elementos
