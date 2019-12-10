@@ -94,12 +94,12 @@ constrangir([C,L|_],MATRIX):-       % criar as contricoes :D
     numberOfElements(C,TColunas),   % obtem-se o numero de colunas
     numberOfElements(L,TLinhas),    % obtem-se o numero de linhas
     create_mat(TLinhas,TColunas,MATRIX),
-    vLine(C,MATRIX),        % verefica-se se as somas sao iguais as restricoes pretendidas tanto nas linhas como nas colunas
-    vColumns(MATRIX,L,TColunas),
+    vLine(L,MATRIX),        % verefica-se se as somas sao iguais as restricoes pretendidas tanto nas linhas como nas colunas
+    vColumns(MATRIX,C,TColunas),
     flatten(MATRIX, Vars), % cria-se a linha completa
     fd_labeling(Vars),     % da-se valoeres corretos aos elementos
-    vLinha(C,MATRIX),      % verifica-se se as restricoes estao corretas nas linhas e nas colunas
-    vColunas(MATRIX,L,TColunas).
+    vLinha(L,MATRIX),      % verifica-se se as restricoes estao corretas nas linhas e nas colunas
+    vColunas(MATRIX,C,TColunas).
 
 print_elements([]).             % print de um elemento
 print_elements([E|T]):-
