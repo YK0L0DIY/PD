@@ -40,12 +40,16 @@ extract(Rows, Col, N) :-
 
 solve(Lines, Constrs) :-
     allPossibilitis(Lines, Constrs, All),     % todas as possibilidades por linha/coluna
-    sort(All, Sorted),                        % ordena por ordem de menores possibilidades
+    write('all found'),nl,!,
+    sort(All, Sorted),!,                        % ordena por ordem de menores possibilidades
+    write('sorted'),nl,
     solve(Sorted).                            % verefica se a linha esta correta relativamente as possibilidades
 
-solve([]).
+solve([]):-write('solution found'),nl,!.
 solve([line(_, Line, Constr)|Rest]) :-
     check_line(Line, Constr),
+    write(Line),
+    write(Constr),nl,
     solve(Rest).
 
 %
@@ -57,7 +61,7 @@ allPossibilitis([], [], []).
 allPossibilitis([Line|Lines], [Constr|Constrs], [line(Count, Line, Constr)|Result]) :-
     length(Line, LineLength),
     length(CheckLine, LineLength),
-    findall(CheckLine, check_line(CheckLine, Constr), NCheckLine),
+    setof(CheckLine, check_line(CheckLine, Constr), NCheckLine),
     length(NCheckLine, Count),
     allPossibilitis(Lines, Constrs, Result).
 
