@@ -61,7 +61,6 @@ allPossibilitis([Line|Lines], [Constr|Constrs], [line(Count, Line, Constr)|Resul
     length(NCheckLine, Count),
     allPossibilitis(Lines, Constrs, Result).
 
-
 % check_line verefica se a linha esta correta segundo as constricoes ou constroi uma linha segundo as restricoes
 %   Exemplo:
 %   ?- L = [_,_,_,_,_], check_line(L, [2,1]).
