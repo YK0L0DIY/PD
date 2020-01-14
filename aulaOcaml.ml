@@ -20,7 +20,7 @@ let rec app = function
     | x::xs -> (function l2 -> x::(app xs l2));;
 
 let rec member = function
-      [] -> (function n -> false)
+    | [] -> (function n -> false)
     | x::xs -> (function n  -> if (x=n) then true else member xs n);;
 
 let rec remove = function
@@ -56,3 +56,32 @@ let apl1 e = function
 let apl2 e = function
     n -> e(e n);;
 
+type 'a abp = N of ('a abp * 'a * 'a abp) | V ;;
+
+let rec lookup = function
+    V -> (function _ -> false)
+  | N (l,v,r) -> function x ->
+                     if x=v then true else
+                     if x<v then (lookup l x) else
+                                 (lookup r x);;
+
+let rec insert = function
+  | V -> (function x -> N (V,x,V))
+  | N (l,v,r) -> function x ->
+                     if x=v then N (l,x,r) else
+                     if x<v then N ((insert l x),v,r) else
+                                 N (l,v,(insert r x));;
+
+let rec elements= function
+  | V -> []
+  | N (r, v, l) -> app (app (elements r) [v]) (elements l);;
+
+type numeral = Z | S of numeral;;
+
+let rec cont = function
+  | Z -> 0
+  | S (v) -> 1 + cont v;;
+
+let rec num_to_numeral = function
+  | 0 -> Z
+  | x -> S (num_to_numeral (x-1));;
