@@ -59,7 +59,7 @@ sumLista(L,Sum):-
     sumLista(L,0,Sum).
 sumLista([],X,X).
 sumLista([E|L],S,Sum):-
-    S1 = S+E,
+    S1 is S+E,
     sumLista(L,S1,Sum).
 
 vLine([],[]).                % verificar a soma de cada linha
@@ -69,8 +69,8 @@ vLine([SubL|T],[SubL2|T2]):-
 
 avSum([],[],0).             % averiguar que a soma de uma lista de constrag e igual a soma da lista pretendida
 avSum(Line,CLine,S):-
-    sumLista(Line,S),
-    sumListaC(CLine,S).
+    sumLista(CLine,S),
+    sumListaC(Line,S).
 
 % check_line verefica se a linha esta correta segundo as constricoes ou constroi uma linha segundo as restricoes
 %   Exemplo:
